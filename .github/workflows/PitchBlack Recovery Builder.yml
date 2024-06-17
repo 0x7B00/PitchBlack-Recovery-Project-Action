@@ -40,7 +40,7 @@ jobs:
     - name: Check Out
       uses: actions/checkout@v3
       with:
-        token: ${{ secrets.GIT_TOKEN }}   # Update the token reference here
+        token: ${{ secrets.GIT_TOKEN }}
 
     - name: Setup Build Environment
       run: |
@@ -60,11 +60,17 @@ jobs:
       run: |
         git config --global url."https://${{ secrets.GIT_TOKEN }}@github.com/".insteadOf "https://github.com/"
 
+    - name: Install repo tool
+      run: |
+        mkdir -p ~/.bin
+        curl https://storage.googleapis.com/git-repo-downloads/repo > ~/.bin/repo
+        chmod a+x ~/.bin/repo
+        export PATH=$PATH:~/.bin
+
     - name: Sync PitchBlack sources
       run: |
         cd ${{ env.workspace-folder }}
-        git clone --depth=1 https://github.com/PitchBlackRecoveryProject/manifest_pb.git -b ${{ github.event.inputs.MANIFEST_BRANCH }} .repo/local_manifests
-        repo init -u https://github.com/PitchBlackRecoveryProject/manifest_pb.git -b ${{ github.event.inputs.MANIFEST_BRANCH }}
+        repo init -u https://github.com/PitchBlackRecoveryProject/manifest_pbrp.git -b ${{ github.event.inputs.MANIFEST_BRANCH }}
         repo sync -c -j$(nproc --all)
 
     - name: Clone device tree
@@ -103,4 +109,4 @@ jobs:
           Device: ${{ github.event.inputs.DEVICE_NAME }}
           Target: ${{ github.event.inputs.BUILD_TARGET }}
       env:
-        GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}   # Update the token reference here
+        GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
