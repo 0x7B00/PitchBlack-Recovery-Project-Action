@@ -40,7 +40,7 @@ jobs:
     - name: Check Out
       uses: actions/checkout@v3
       with:
-        persist-credentials: false
+        token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Setup Build Environment
       run: |
@@ -55,10 +55,6 @@ jobs:
         mkdir workspace
         cd workspace
         echo "workspace-folder=$(pwd)" >> $GITHUB_ENV
-
-    - name: Authenticate GitHub
-      run: |
-        echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
 
     - name: Configure Git
       run: |
