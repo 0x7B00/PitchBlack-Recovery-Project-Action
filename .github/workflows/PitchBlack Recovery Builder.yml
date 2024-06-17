@@ -40,7 +40,7 @@ jobs:
     - name: Check Out
       uses: actions/checkout@v3
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.GIT_TOKEN }}   # Update the token reference here
 
     - name: Setup Build Environment
       run: |
@@ -58,7 +58,7 @@ jobs:
 
     - name: Configure Git
       run: |
-        git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf "https://github.com/"
+        git config --global url."https://${{ secrets.GIT_TOKEN }}@github.com/".insteadOf "https://github.com/"
 
     - name: Sync PitchBlack sources
       run: |
@@ -103,4 +103,4 @@ jobs:
           Device: ${{ github.event.inputs.DEVICE_NAME }}
           Target: ${{ github.event.inputs.BUILD_TARGET }}
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}   # Update the token reference here
