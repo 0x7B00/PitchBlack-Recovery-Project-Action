@@ -63,8 +63,8 @@ jobs:
     - name: Sync PitchBlack sources
       run: |
         cd ${{ env.workspace-folder }}
-        git clone --depth=1 https://github.com/PitchBlackRecoveryProject/manifest_pbrp.git -b ${{ github.event.inputs.MANIFEST_BRANCH }} .repo/local_manifests
-        repo init -u https://github.com/PitchBlackRecoveryProject/manifest_pbrp.git -b ${{ github.event.inputs.MANIFEST_BRANCH }}
+        git clone --depth=1 https://github.com/PitchBlackRecoveryProject/manifest_pb.git -b ${{ github.event.inputs.MANIFEST_BRANCH }} .repo/local_manifests
+        repo init -u https://github.com/PitchBlackRecoveryProject/manifest_pb.git -b ${{ github.event.inputs.MANIFEST_BRANCH }}
         repo sync -c -j$(nproc --all)
 
     - name: Clone device tree
